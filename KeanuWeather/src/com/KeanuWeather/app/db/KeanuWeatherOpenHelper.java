@@ -12,25 +12,25 @@ public class KeanuWeatherOpenHelper extends SQLiteOpenHelper {
      * province建表语句
      */
     public static final String CREATE_PROVINCE = "create table provinces("
-            +"province_id int not null identity(1,1) primary key,"
-            +"province_name char(100) not null,"
-            +"province_code char(20) not null)";
+            +"province_id integer primary key autoincrement,"
+            +"province_name char(100),"
+            +"province_code char(20))";
     /**
      * city建表语句
      */
     public static final String CREATE_CITY = "create table cities("
-            +"city_id int not null identity(1,1) primary key,"
-            +"city_name char(100) not null,"
-            +"city_code char(20) not null,"
-            +"province_id int)";
+            +"city_id integer primary key autoincrement,"
+            +"city_name char(100),"
+            +"city_code char(20),"
+            +"province_id integer)";
     /**
      * county建表语句
      */
     public static final String CREATE_COUNTY = "create table counties("
-            +"county_id int not null identity(1,1) primary key,"
+            +"county_id integer primary key autoincrement,"
             +"county_name char(100) not null,"
             +"county_code char(20) not null,"
-            +"city_id int)";
+            +"city_id integer)";
     public KeanuWeatherOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }

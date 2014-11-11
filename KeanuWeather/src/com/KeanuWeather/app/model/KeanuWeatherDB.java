@@ -85,16 +85,15 @@ public class KeanuWeatherDB {
     /**
      * 从数据库读取全国所有的城市信息
      */
-    public List<City> loadCities(){
+    public List<City> loadCities(int provinceId){
         List<City> list = new ArrayList<City>();
-        String sql = "select * from  cities";
-        Cursor cursor = db.rawQuery(sql,null);
+        String sql = "select * from  cities where province_id = ?";
+        Cursor cursor = db.rawQuery(sql,new String[]{provinceId+""});
         if (cursor.moveToFirst()){
             do {
                 int cityId = cursor.getInt(cursor.getColumnIndex("city_id"));
                 String cityName = cursor.getString(cursor.getColumnIndex("city_name"));
                 String cityCode = cursor.getString(cursor.getColumnIndex("city_code"));
-                int provinceId = cursor.getInt(cursor.getColumnIndex("province_id"));
                 City city = new City();
                 city.setCityId(cityId);
                 city.setCityName(cityName);
@@ -110,7 +109,7 @@ public class KeanuWeatherDB {
      */
     public void saveCounty(County county){
         ContentValues values = new ContentValues();
-        values.put("county_name",county.getCountyId());
+        values.put("county_name",county.getCountyName());
         values.put("county_code",county.getCountyCode());
         values.put("city_id",county.getCityId());
         db.insert("counties",null,values);
@@ -118,16 +117,15 @@ public class KeanuWeatherDB {
     /**
      * 从数据库读取全国所有的县信息
      */
-    public List<County> loadcounties(){
+    public List<County> loadcounties(int cityId){
         List<County> list = new ArrayList<County>();
-        String sql = "select * from  counties";
-        Cursor cursor = db.rawQuery(sql,null);
+        String sql = "select * from  counties where city_id = ?";
+        Cursor cursor = db.rawQuery(sql,new String[]{cityId+""});
         if (cursor.moveToFirst()){
             do {
                 int countyId = cursor.getInt(cursor.getColumnIndex("county_id"));
                 String countyName = cursor.getString(cursor.getColumnIndex("county_name"));
                 String countyCode = cursor.getString(cursor.getColumnIndex("county_code"));
-                int cityId = cursor.getInt(cursor.getColumnIndex("city_id"));
                 County county = new County();
                 county.setCountyId(countyId);
                 county.setCountyName(countyName);
